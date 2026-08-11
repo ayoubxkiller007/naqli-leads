@@ -4,10 +4,8 @@ export const BRAND = {
   city: "جدة",
   country: "السعودية",
   tagline: "عروض نقل عفش مجانية من شركات معتمدة",
-  phone: "0500000000",
-  phoneDisplay: "050 000 0000",
-  phoneTel: "+966500000000",
-  whatsapp: "966500000000",
+  /** WhatsApp only — used in wa.me links, never shown as visible text on the site */
+  whatsapp: "212704497048",
   cities: ["جدة", "الرياض", "الدمام", "مكة", "الطائف", "الخبر", "المدينة"],
 };
 
