@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Naqli">
+  <rect width="128" height="128" rx="28" fill="#042F2E"/>
+  <g fill="#2DD4BF">
+    <rect x="22" y="48" width="48" height="28" rx="6"/>
+    <path d="M70 56h24l16 18v14H70V56z"/>
+    <circle cx="40" cy="84" r="9" fill="#ECFEFF"/>
+    <circle cx="92" cy="84" r="9" fill="#ECFEFF"/>
+  </g>
+</svg>

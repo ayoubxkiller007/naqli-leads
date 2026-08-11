@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 160" role="img" aria-label="FBDJ">
+  <rect width="480" height="160" rx="24" fill="#FFFFFF"/>
+  <!-- truck mark -->
+  <g fill="#0D9488">
+    <rect x="48" y="58" width="88" height="42" rx="8"/>
+    <path d="M136 70h46l28 30v20h-74V70z"/>
+    <circle cx="78" cy="108" r="12" fill="#042F2E"/>
+    <circle cx="168" cy="108" r="12" fill="#042F2E"/>
+    <circle cx="78" cy="108" r="5" fill="#FFFFFF"/>
+    <circle cx="168" cy="108" r="5" fill="#FFFFFF"/>
+  </g>
+  <text x="220" y="78" font-family="Arial, Tahoma, sans-serif" font-size="42" font-weight="800" fill="#0B1220">FNBRDPJ</text>
+  <text x="220" y="112" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#0D9488">NAQLI</text>
+</svg>

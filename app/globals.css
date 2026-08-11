@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #070f0c;
+  color: #f3faf7;
+  font-family: var(--font-body), Tahoma, Arial, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-body), Tahoma, sans-serif;
+}
+
+.hero-bg {
+  background-image:
+    radial-gradient(ellipse 70% 50% at 80% 0%, rgba(45, 212, 191, 0.18), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 10% 30%, rgba(15, 118, 110, 0.25), transparent 50%),
+    linear-gradient(180deg, #0c1613 0%, #070f0c 100%);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.65s ease-out both; }
+.fade-up-d { animation: fade-up 0.65s ease-out 0.12s both; }
+.fade-up-d2 { animation: fade-up 0.65s ease-out 0.22s both; }
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.45); }
+  70% { box-shadow: 0 0 0 14px rgba(45, 212, 191, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
+}
+.pulse-cta { animation: pulse-ring 2.2s ease-out infinite; }
