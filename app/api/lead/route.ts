@@ -1,16 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BRAND, MOVE_TYPES } from "@/lib/config";
+import { clientIp, countryFromHeaders, lookupGeo } from "@/lib/geo";
 import { saveLead } from "@/lib/leads-store";
 
 export const dynamic = "force-dynamic";
-
-function clientIp(req: NextRequest) {
-  return (
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    req.headers.get("x-real-ip") ||
-    "0.0.0.0"
-  );
-}
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
@@ -36,6 +29,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "اختر نوع النقل" }, { status: 400 });
   }
 
+  const ip = clientIp(req);
+  const geo = await lookupGeo(ip, countryFromHeaders(req));
+
   const lead = await saveLead({
     name,
     phone,
@@ -44,7 +40,8 @@ export async function POST(req: NextRequest) {
     fromArea: fromArea || undefined,
     toArea: toArea || undefined,
     notes: notes || undefined,
-    ip: clientIp(req),
+    ip,
+    country: geo.country,
   });
 
   return NextResponse.json({ ok: true, id: lead.id });

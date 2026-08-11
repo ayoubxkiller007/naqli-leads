@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cairo, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { BRAND } from "@/lib/config";
+import { Tracker } from "@/components/Tracker";
 
 const display = Cairo({
   subsets: ["arabic", "latin"],
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
   description:
     "اطلب عروض نقل عفش مجانية في جدة والسعودية — نربطك بشركات نقل معتمدة بسرعة.",
   icons: { icon: "/icon.png" },
+  metadataBase: new URL("https://naqlisa.netlify.app"),
 };
 
 export default function RootLayout({
@@ -28,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className={`${display.variable} ${body.variable} antialiased`}>
+        <Tracker />
         {children}
       </body>
     </html>
