@@ -2,6 +2,11 @@
 
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  LiveActivity,
+  SlotsLeft,
+  TodayCounter,
+} from "@/components/ConversionWidgets";
 import { getVisitorId, trackVisitor } from "@/lib/visitor-client";
 
 export function LeadForm() {
@@ -12,8 +17,10 @@ export function LeadForm() {
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState(false);
   const trackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
 
   const draft = useCallback(() => ({ name, phone }), [name, phone]);
+  const filled = Number(name.trim().length >= 2) + Number(phone.replace(/\D/g, "").length >= 9);
 
   const pushDraft = useCallback(
     (stage: "viewing_form" | "filling_form", activity?: string) => {
@@ -31,7 +38,9 @@ export function LeadForm() {
   );
 
   useEffect(() => {
+    const t = window.setTimeout(() => nameRef.current?.focus(), 600);
     return () => {
+      window.clearTimeout(t);
       if (trackTimer.current) clearTimeout(trackTimer.current);
     };
   }, []);
@@ -82,27 +91,47 @@ export function LeadForm() {
       id="lead-form"
       onSubmit={onSubmit}
       onFocus={onFocusForm}
-      className="space-y-4 rounded-2xl border border-white/10 bg-[#101a17]/95 p-5 shadow-2xl backdrop-blur sm:p-6"
+      className="relative space-y-4 overflow-hidden rounded-2xl border-2 border-teal-400/25 bg-[#101a17]/95 p-5 shadow-[0_0_40px_rgba(45,212,191,0.12)] backdrop-blur sm:p-6"
       dir="rtl"
     >
+      <div className="absolute -left-8 -top-8 h-24 w-24 rounded-full bg-teal-400/10 blur-2xl" />
+
+      <LiveActivity />
+
       <div>
         <p className="text-xs font-bold tracking-wide text-teal-300">
-          30 ثانية فقط · مجاني 100%
+          ⚡ 30 ثانية · مجاني 100% · ما عليك التزام
         </p>
         <h2 className="mt-1 text-2xl font-extrabold text-white sm:text-3xl">
           اطلب عرض نقل عفش
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-white/55">
-          اكتب اسمك ورقمك — شركة شريكنا تتصل بك وتأكد معك التفاصيل
+          اسمك + رقمك — وبيكلمك مندوب ويعطيك أفضل عروض
         </p>
       </div>
+
+      <div className="space-y-1">
+        <div className="flex justify-between text-[10px] font-bold text-white/40">
+          <span>تقدم الطلب</span>
+          <span className="text-teal-300">{filled}/2</span>
+        </div>
+        <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+          <div
+            className="h-full rounded-full bg-teal-400 transition-all duration-300"
+            style={{ width: `${(filled / 2) * 100}%` }}
+          />
+        </div>
+      </div>
+
+      <SlotsLeft />
 
       <div className="space-y-3">
         <label className="block">
           <span className="mb-1.5 block text-xs font-bold text-white/50">
-            الاسم الكامل
+            1. الاسم الكامل
           </span>
           <input
+            ref={nameRef}
             className={field}
             placeholder="مثال: محمد العتيبي"
             value={name}
@@ -116,7 +145,7 @@ export function LeadForm() {
         </label>
         <label className="block">
           <span className="mb-1.5 block text-xs font-bold text-white/50">
-            رقم الجوال
+            2. رقم الجوال
           </span>
           <input
             className={`${field} font-mono tracking-wide`}
@@ -132,6 +161,9 @@ export function LeadForm() {
             dir="ltr"
             required
           />
+          <p className="mt-1 text-[10px] text-white/35">
+            🔒 رقمك محمي — ما نشاركه إلا مع شركات النقل المعتمدة
+          </p>
         </label>
       </div>
 
@@ -140,15 +172,18 @@ export function LeadForm() {
       <button
         type="submit"
         disabled={loading}
-        className="pulse-cta w-full rounded-xl bg-teal-400 py-4 text-base font-extrabold text-[#04201a] hover:bg-teal-300 disabled:opacity-60"
+        className="pulse-cta w-full rounded-xl bg-teal-400 py-4 text-base font-extrabold text-[#04201a] shadow-lg shadow-teal-400/20 hover:bg-teal-300 disabled:opacity-60"
       >
-        {loading ? "جاري الإرسال…" : "أرسل — وتصلك مكالمة تأكيد"}
+        {loading ? "جاري الإرسال…" : "🔥 أبي أطلب عرض مجاني — اتصلوا فيني"}
       </button>
 
-      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] font-semibold text-white/40">
+      <TodayCounter />
+
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] font-semibold text-white/40">
         <span>✓ مجاني</span>
         <span>✓ بدون التزام</span>
         <span>✓ شركات معتمدة</span>
+        <span>✓ رد خلال دقايق</span>
       </div>
     </form>
   );
