@@ -11,12 +11,14 @@ const QUICK_REPLIES = [
   "السلام عليكم، أحتاج عرض نقل عفش",
   "كم يكلف النقل تقريباً؟",
   "عندكم شركات في جدة؟",
-  "متى تقدرون تتواصلون معي؟",
 ];
+
+function hideChatPath(path: string) {
+  return path.startsWith("/admin") || path.startsWith("/thank-you");
+}
 
 export function LiveChat() {
   const pathname = usePathname() || "/";
-  const [showChat, setShowChat] = useState<boolean | null>(null);
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -27,11 +29,7 @@ export function LiveChat() {
   const openedOnce = useRef(false);
 
   useEffect(() => {
-    setShowChat(window.matchMedia("(min-width: 768px)").matches);
-  }, []);
-
-  useEffect(() => {
-    if (!showChat || pathname.startsWith("/admin")) return;
+    if (hideChatPath(pathname)) return;
     const id = getVisitorId();
     let stopped = false;
 
@@ -55,13 +53,13 @@ export function LiveChat() {
     };
 
     pull();
-    const ms = open ? 1000 : 2500;
+    const ms = open ? 1500 : 4000;
     const t = window.setInterval(pull, ms);
     return () => {
       stopped = true;
       window.clearInterval(t);
     };
-  }, [open, pathname, showChat]);
+  }, [open, pathname]);
 
   useEffect(() => {
     if (open) {
@@ -83,7 +81,7 @@ export function LiveChat() {
     }
   }, [open, messages]);
 
-  if (pathname.startsWith("/admin") || showChat === false) return null;
+  if (hideChatPath(pathname)) return null;
 
   async function sendMessage(body: string) {
     const trimmed = body.trim();
@@ -131,16 +129,16 @@ export function LiveChat() {
           type="button"
           onClick={() => setOpen(true)}
           aria-label="محادثة مباشرة"
-          className="fixed bottom-20 left-4 z-50 flex items-center gap-2 rounded-full bg-[#25D366] py-2.5 pl-3 pr-4 text-white shadow-lg animate-pulse sm:bottom-6"
+          className="fixed bottom-[4.75rem] left-3 z-30 flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md md:bottom-6 md:left-4 md:h-14 md:w-auto md:gap-2 md:rounded-full md:py-2.5 md:pl-3 md:pr-4 md:shadow-lg"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15">
-            <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
-              <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .8-.2 1.4Z" />
-            </svg>
+          <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current md:h-6 md:w-6">
+            <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .8-.2 1.4Z" />
+          </svg>
+          <span className="hidden text-sm font-extrabold md:inline">
+            محادثة مباشرة
           </span>
-          <span className="text-sm font-extrabold">محادثة مباشرة</span>
           {unread > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold">
+            <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-0.5 text-[9px] font-bold md:h-5 md:min-w-5 md:text-[10px]">
               {unread > 9 ? "9+" : unread}
             </span>
           )}
@@ -149,15 +147,14 @@ export function LiveChat() {
 
       {open && (
         <div
-          className="fixed bottom-20 left-3 right-3 z-50 flex h-[min(460px,68vh)] w-auto flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#efeae2] shadow-2xl sm:bottom-4 sm:left-4 sm:right-auto sm:h-[min(520px,72vh)] sm:w-[min(380px,calc(100vw-2rem))]"
+          className="fixed bottom-[4.75rem] left-3 right-3 z-30 flex h-[min(340px,52vh)] flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#efeae2] shadow-2xl md:bottom-4 md:left-4 md:right-auto md:h-[min(520px,72vh)] md:w-[min(380px,calc(100vw-2rem))]"
           dir="rtl"
         >
-          <div className="flex items-center justify-between bg-[#075E54] px-4 py-3 text-white">
+          <div className="flex items-center justify-between bg-[#075E54] px-3 py-2.5 text-white md:px-4 md:py-3">
             <div>
-              <p className="text-sm font-bold">{BRAND.nameAr} · دعم مباشر</p>
-              <p className="text-[11px] text-white/75">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#25D366] align-middle" />{" "}
-                متصل الآن — نرد خلال دقائق
+              <p className="text-xs font-bold md:text-sm">{BRAND.nameAr}</p>
+              <p className="text-[10px] text-white/75 md:text-[11px]">
+                نرد خلال دقائق
               </p>
             </div>
             <button
@@ -170,22 +167,20 @@ export function LiveChat() {
             </button>
           </div>
 
-          <div className="flex-1 space-y-2 overflow-y-auto px-3 py-3">
+          <div className="flex-1 space-y-2 overflow-y-auto px-2.5 py-2 md:px-3 md:py-3">
             {messages.length === 0 && (
               <div className="space-y-2">
-                <div className="rounded-lg bg-white/90 px-3 py-2 text-sm text-gray-700 shadow-sm">
-                  مرحباً بك في {BRAND.nameAr} 👋
-                  <br />
-                  اكتب سؤالك عن نقل العفش أو اختر رسالة جاهزة:
+                <div className="rounded-lg bg-white/90 px-3 py-2 text-xs text-gray-700 shadow-sm md:text-sm">
+                  مرحباً 👋 اكتب سؤالك أو اختر:
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   {QUICK_REPLIES.map((q) => (
                     <button
                       key={q}
                       type="button"
                       onClick={() => sendMessage(q)}
                       disabled={sending}
-                      className="rounded-full border border-[#075E54]/20 bg-white px-3 py-1.5 text-xs font-semibold text-[#075E54] shadow-sm hover:bg-[#dcf8c6] disabled:opacity-50"
+                      className="rounded-full border border-[#075E54]/20 bg-white px-2.5 py-1 text-[10px] font-semibold text-[#075E54] md:px-3 md:py-1.5 md:text-xs"
                     >
                       {q}
                     </button>
@@ -199,24 +194,13 @@ export function LiveChat() {
                 className={`flex ${m.from === "visitor" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-lg px-3 py-2 text-sm shadow-sm ${
+                  className={`max-w-[85%] rounded-lg px-2.5 py-1.5 text-xs shadow-sm md:px-3 md:py-2 md:text-sm ${
                     m.from === "visitor"
                       ? "rounded-bl-sm bg-[#dcf8c6] text-gray-900"
                       : "rounded-br-sm bg-white text-gray-900"
                   }`}
                 >
-                  {m.from === "admin" ? (
-                    <p className="mb-0.5 text-[10px] font-bold text-[#075E54]">
-                      فريق {BRAND.nameAr}
-                    </p>
-                  ) : null}
                   <p className="whitespace-pre-wrap break-words">{m.text}</p>
-                  <p className="mt-1 text-left text-[10px] text-gray-500">
-                    {new Date(m.at).toLocaleTimeString("ar-SA", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
                 </div>
               </div>
             ))}
@@ -225,22 +209,22 @@ export function LiveChat() {
 
           <form
             onSubmit={send}
-            className="flex items-center gap-2 border-t border-black/5 bg-[#f0f2f5] px-2 py-2"
+            className="flex items-center gap-1.5 border-t border-black/5 bg-[#f0f2f5] px-2 py-1.5 md:gap-2 md:py-2"
           >
             <input
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="اكتب رسالتك هنا…"
-              className="flex-1 rounded-full border-0 bg-white px-4 py-2.5 text-sm text-gray-900 outline-none ring-0"
+              placeholder="رسالتك…"
+              className="flex-1 rounded-full border-0 bg-white px-3 py-2 text-sm text-gray-900 outline-none md:px-4 md:py-2.5"
               dir="rtl"
             />
             <button
               type="submit"
               disabled={sending || !text.trim()}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white disabled:opacity-50"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white disabled:opacity-50 md:h-10 md:w-10"
               aria-label="إرسال"
             >
-              <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
+              <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current md:h-5 md:w-5">
                 <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
               </svg>
             </button>
