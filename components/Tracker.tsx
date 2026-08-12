@@ -1,31 +1,27 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { getVisitorId, trackVisitor } from "@/lib/visitor-client";
 
-function isAdminPath(path: string) {
-  return path.startsWith("/admin");
-}
-
-/** Heartbeat tracker — skips admin routes so you don't show as live */
+/** Heartbeat — slower on mobile to stay light */
 export function Tracker() {
-  const pathname = usePathname() || "/";
-
   useEffect(() => {
-    if (isAdminPath(pathname)) return;
+    if (window.location.pathname.startsWith("/admin")) return;
 
     getVisitorId();
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
+    const ms = mobile ? 20_000 : 10_000;
+
     const ping = () => {
       const path = window.location.pathname + window.location.search;
-      if (isAdminPath(path)) return;
+      if (path.startsWith("/admin")) return;
       trackVisitor({
         path,
         stage: path.startsWith("/thank-you") ? "thank_you" : "browsing",
       });
     };
     ping();
-    const t = window.setInterval(ping, 8000);
+    const t = window.setInterval(ping, ms);
     const onVis = () => {
       if (document.visibilityState === "visible") ping();
     };
@@ -34,7 +30,6 @@ export function Tracker() {
       window.clearInterval(t);
       document.removeEventListener("visibilitychange", onVis);
     };
-  }, [pathname]);
-
+  }, []);
   return null;
 }

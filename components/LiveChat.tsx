@@ -16,6 +16,7 @@ const QUICK_REPLIES = [
 
 export function LiveChat() {
   const pathname = usePathname() || "/";
+  const [showChat, setShowChat] = useState<boolean | null>(null);
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -26,7 +27,11 @@ export function LiveChat() {
   const openedOnce = useRef(false);
 
   useEffect(() => {
-    if (pathname.startsWith("/admin")) return;
+    setShowChat(window.matchMedia("(min-width: 768px)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (!showChat || pathname.startsWith("/admin")) return;
     const id = getVisitorId();
     let stopped = false;
 
@@ -56,7 +61,7 @@ export function LiveChat() {
       stopped = true;
       window.clearInterval(t);
     };
-  }, [open, pathname]);
+  }, [open, pathname, showChat]);
 
   useEffect(() => {
     if (open) {
@@ -78,7 +83,7 @@ export function LiveChat() {
     }
   }, [open, messages]);
 
-  if (pathname.startsWith("/admin")) return null;
+  if (pathname.startsWith("/admin") || showChat === false) return null;
 
   async function sendMessage(body: string) {
     const trimmed = body.trim();

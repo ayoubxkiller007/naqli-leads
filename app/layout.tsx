@@ -1,20 +1,27 @@
+import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import { Cairo, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { BRAND } from "@/lib/config";
-import { LiveChat } from "@/components/LiveChat";
 import { Tracker } from "@/components/Tracker";
 
+const LiveChat = dynamic(
+  () => import("@/components/LiveChat").then((m) => m.LiveChat),
+  { ssr: false }
+);
+
 const display = Cairo({
-  subsets: ["arabic", "latin"],
-  weight: ["700", "800", "900"],
+  subsets: ["arabic"],
+  weight: ["800"],
   variable: "--font-display",
+  display: "swap",
 });
 
 const body = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic", "latin"],
-  weight: ["400", "500", "600", "700"],
+  subsets: ["arabic"],
+  weight: ["400", "600"],
   variable: "--font-body",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

@@ -7,12 +7,14 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: #070f0c;
   color: #f3faf7;
   font-family: var(--font-body), Tahoma, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .font-display {
@@ -20,26 +22,27 @@ body {
 }
 
 .hero-bg {
-  background-image:
-    radial-gradient(ellipse 70% 50% at 80% 0%, rgba(45, 212, 191, 0.18), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 10% 30%, rgba(15, 118, 110, 0.25), transparent 50%),
-    linear-gradient(180deg, #0c1613 0%, #070f0c 100%);
+  background: #070f0c;
 }
 
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (min-width: 768px) {
+  .hero-bg {
+    background-image:
+      radial-gradient(ellipse 70% 50% at 80% 0%, rgba(45, 212, 191, 0.18), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 10% 30%, rgba(15, 118, 110, 0.25), transparent 50%),
+      linear-gradient(180deg, #0c1613 0%, #070f0c 100%);
+  }
 }
-.fade-up { animation: fade-up 0.65s ease-out both; }
-.fade-up-d { animation: fade-up 0.65s ease-out 0.12s both; }
-.fade-up-d2 { animation: fade-up 0.65s ease-out 0.22s both; }
 
 @keyframes pulse-ring {
   0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.45); }
   70% { box-shadow: 0 0 0 14px rgba(45, 212, 191, 0); }
   100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
 }
-.pulse-cta { animation: pulse-ring 2.2s ease-out infinite; }
+
+@media (min-width: 768px) {
+  .pulse-cta { animation: pulse-ring 2.2s ease-out infinite; }
+}
 
 @keyframes thank-pop {
   0% { transform: scale(0.6); opacity: 0; }
@@ -48,18 +51,27 @@ body {
 }
 .thank-check { animation: thank-pop 0.55s ease-out both; }
 
-@keyframes phone-ring {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  10% { transform: rotate(-12deg) scale(1.05); }
-  20% { transform: rotate(12deg) scale(1.05); }
-  30% { transform: rotate(-10deg); }
-  40% { transform: rotate(10deg); }
-  50% { transform: rotate(0deg); }
-}
-.phone-icon { animation: phone-ring 2.5s ease-in-out infinite; }
+@media (min-width: 768px) {
+  @keyframes phone-ring {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(12deg); }
+    40% { transform: rotate(-10deg); }
+    60% { transform: rotate(0deg); }
+  }
+  .phone-icon { animation: phone-ring 2.5s ease-in-out infinite; }
 
-@keyframes phone-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.35); }
-  50% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+  @keyframes phone-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.35); }
+    50% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+  }
+  .phone-pulse { animation: phone-glow 2s ease-in-out infinite; }
 }
-.phone-pulse { animation: phone-glow 2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-cta,
+  .thank-check,
+  .phone-icon,
+  .phone-pulse {
+    animation: none !important;
+  }
+}

@@ -20,7 +20,9 @@ export function LeadForm() {
   const nameRef = useRef<HTMLInputElement>(null);
 
   const draft = useCallback(() => ({ name, phone }), [name, phone]);
-  const filled = Number(name.trim().length >= 2) + Number(phone.replace(/\D/g, "").length >= 9);
+  const filled =
+    Number(name.trim().length >= 2) +
+    Number(phone.replace(/\D/g, "").length >= 9);
 
   const pushDraft = useCallback(
     (stage: "viewing_form" | "filling_form", activity?: string) => {
@@ -32,13 +34,15 @@ export function LeadForm() {
           formDraft: draft(),
           activity,
         });
-      }, 400);
+      }, 600);
     },
     [draft]
   );
 
   useEffect(() => {
-    const t = window.setTimeout(() => nameRef.current?.focus(), 600);
+    const desktop = window.matchMedia("(min-width: 768px)").matches;
+    if (!desktop) return;
+    const t = window.setTimeout(() => nameRef.current?.focus(), 400);
     return () => {
       window.clearTimeout(t);
       if (trackTimer.current) clearTimeout(trackTimer.current);
@@ -84,33 +88,35 @@ export function LeadForm() {
   }
 
   const field =
-    "w-full rounded-xl border border-white/15 bg-[#0a1210] px-4 py-3.5 text-base text-white outline-none transition focus:border-teal-400/60 focus:ring-2 focus:ring-teal-400/20";
+    "w-full rounded-xl border border-white/15 bg-[#0a1210] px-4 py-4 text-base text-white outline-none focus:border-teal-400/60 md:py-3.5";
 
   return (
     <form
       id="lead-form"
       onSubmit={onSubmit}
       onFocus={onFocusForm}
-      className="relative space-y-4 overflow-hidden rounded-2xl border-2 border-teal-400/25 bg-[#101a17]/95 p-5 shadow-[0_0_40px_rgba(45,212,191,0.12)] backdrop-blur sm:p-6"
+      className="space-y-3 rounded-2xl border border-teal-400/20 bg-[#101a17] p-4 md:relative md:space-y-4 md:overflow-hidden md:border-2 md:border-teal-400/25 md:bg-[#101a17]/95 md:p-6 md:shadow-[0_0_40px_rgba(45,212,191,0.12)] md:backdrop-blur"
       dir="rtl"
     >
-      <div className="absolute -left-8 -top-8 h-24 w-24 rounded-full bg-teal-400/10 blur-2xl" />
+      <div className="hidden md:block absolute -left-8 -top-8 h-24 w-24 rounded-full bg-teal-400/10 blur-2xl" />
 
-      <LiveActivity />
+      <div className="hidden md:block">
+        <LiveActivity />
+      </div>
 
       <div>
-        <p className="text-xs font-bold tracking-wide text-teal-300">
-          ⚡ 30 ثانية · مجاني 100% · ما عليك التزام
+        <p className="text-[11px] font-bold text-teal-300 md:text-xs">
+          مجاني · 30 ثانية · ما عليك التزام
         </p>
-        <h2 className="mt-1 text-2xl font-extrabold text-white sm:text-3xl">
+        <h2 className="mt-1 text-xl font-extrabold text-white md:text-3xl">
           اطلب عرض نقل عفش
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-white/55">
+        <p className="mt-1 hidden text-sm text-white/55 md:block">
           اسمك + رقمك — وبيكلمك مندوب ويعطيك أفضل عروض
         </p>
       </div>
 
-      <div className="space-y-1">
+      <div className="hidden space-y-1 md:block">
         <div className="flex justify-between text-[10px] font-bold text-white/40">
           <span>تقدم الطلب</span>
           <span className="text-teal-300">{filled}/2</span>
@@ -123,32 +129,35 @@ export function LeadForm() {
         </div>
       </div>
 
-      <SlotsLeft />
+      <div className="hidden md:block">
+        <SlotsLeft />
+      </div>
 
       <div className="space-y-3">
         <label className="block">
-          <span className="mb-1.5 block text-xs font-bold text-white/50">
-            1. الاسم الكامل
+          <span className="mb-1 block text-xs font-bold text-white/50">
+            الاسم
           </span>
           <input
             ref={nameRef}
             className={field}
-            placeholder="مثال: محمد العتيبي"
+            placeholder="محمد العتيبي"
             value={name}
             onChange={(e) => {
               setName(e.target.value);
               pushDraft("filling_form", "يكتب: الاسم");
             }}
             autoComplete="name"
+            enterKeyHint="next"
             required
           />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-xs font-bold text-white/50">
-            2. رقم الجوال
+          <span className="mb-1 block text-xs font-bold text-white/50">
+            رقم الجوال
           </span>
           <input
-            className={`${field} font-mono tracking-wide`}
+            className={`${field} font-mono`}
             placeholder="05xxxxxxxx"
             type="tel"
             inputMode="tel"
@@ -158,12 +167,10 @@ export function LeadForm() {
               pushDraft("filling_form", "يكتب: الجوال");
             }}
             autoComplete="tel"
+            enterKeyHint="go"
             dir="ltr"
             required
           />
-          <p className="mt-1 text-[10px] text-white/35">
-            🔒 رقمك محمي — ما نشاركه إلا مع شركات النقل المعتمدة
-          </p>
         </label>
       </div>
 
@@ -172,18 +179,23 @@ export function LeadForm() {
       <button
         type="submit"
         disabled={loading}
-        className="pulse-cta w-full rounded-xl bg-teal-400 py-4 text-base font-extrabold text-[#04201a] shadow-lg shadow-teal-400/20 hover:bg-teal-300 disabled:opacity-60"
+        className="pulse-cta w-full rounded-xl bg-teal-400 py-4 text-base font-extrabold text-[#04201a] active:scale-[0.98] md:shadow-lg md:shadow-teal-400/20"
       >
-        {loading ? "جاري الإرسال…" : "🔥 أبي أطلب عرض مجاني — اتصلوا فيني"}
+        {loading ? "جاري الإرسال…" : "اطلب عرض مجاني"}
       </button>
 
-      <TodayCounter />
+      <p className="text-center text-[11px] font-semibold text-white/40 md:hidden">
+        ✓ مجاني · ✓ بيكلمك مندوب · ✓ بدون التزام
+      </p>
 
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] font-semibold text-white/40">
+      <div className="hidden md:block">
+        <TodayCounter />
+      </div>
+
+      <div className="hidden flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] font-semibold text-white/40 md:flex">
         <span>✓ مجاني</span>
         <span>✓ بدون التزام</span>
         <span>✓ شركات معتمدة</span>
-        <span>✓ رد خلال دقايق</span>
       </div>
     </form>
   );
