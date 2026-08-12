@@ -1,24 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BRAND } from "@/lib/config";
-import { ThankYouTracker } from "@/components/ThankYouTracker";
+import { CallCountdown, ThankYouTracker } from "@/components/ThankYouTracker";
 
 const STEPS = [
   {
     n: "1",
-    title: "تم استلام طلبك",
-    desc: "سجّلنا اسمك ورقمك في نظامنا الآمن",
+    title: "وصلنا طلبك",
+    desc: "سجّلنا اسمك ورقمك — كل شي تمام ✅",
   },
   {
     n: "2",
-    title: "مكالمة من شركة شريكنا",
-    desc: "راح يتصل بك مندوب معتمد خلال دقائق لتأكيد طلبك",
+    title: "بيكلمك مندوب الشركة",
+    desc: "مندوب من شركتنا المعتمدة بيتصل فيك قريب ويأكد معك التفاصيل",
   },
   {
     n: "3",
-    title: "احصل على أفضل عرض",
-    desc: "بعد التأكيد، يعطيك السعر والتفاصيل — بدون أي التزام",
+    title: "تاخذ أفضل عرض",
+    desc: "بعد التأكيد يعطيك السعر — مجاني وما عليك أي التزام",
   },
+];
+
+const TIPS = [
+  "خلّ جوالك مفتوح وصوته عالي",
+  "ارفع المكالمة حتى لو الرقم ما تعرفه",
+  "جهّز: من وين لوين تبي تنقل العفش",
 ];
 
 export default async function ThankYouPage({
@@ -58,32 +64,59 @@ export default async function ThankYouPage({
               </svg>
             </div>
             <h1 className="font-display mt-5 text-3xl font-black text-white sm:text-4xl">
-              تم استلام طلبك بنجاح
+              تمام، وصلنا طلبك 👌
             </h1>
             <p className="mt-3 text-base leading-relaxed text-white/65">
-              شكراً لثقتك في{" "}
+              يا هلا فيك — شكراً إنك اخترت{" "}
               <span className="font-bold text-teal-300">{BRAND.nameAr}</span>
             </p>
+            <CallCountdown />
           </div>
 
           <div className="space-y-5 px-6 py-7">
-            <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 px-4 py-4">
+            <div className="phone-pulse rounded-2xl border-2 border-amber-400/40 bg-gradient-to-br from-amber-400/15 to-amber-500/5 px-4 py-5">
               <div className="flex items-start gap-3">
-                <span className="text-2xl leading-none">📞</span>
+                <span className="phone-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-amber-400/20 text-2xl">
+                  📞
+                </span>
                 <div>
-                  <p className="font-extrabold text-amber-100">
-                    مهم جداً: أبقِ جوالك مفتوحاً
+                  <p className="text-lg font-black text-amber-50">
+                    مهم: خلّ جوالك مفتوح الحين
                   </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-amber-100/80">
-                    راح يتصل بك{" "}
+                  <p className="mt-2 text-sm leading-relaxed text-amber-100/90">
+                    بيكلمك{" "}
                     <strong className="text-white">
-                      مندوب من إحدى شركاتنا المعتمدة
+                      مندوب من شركتنا المعتمدة
                     </strong>{" "}
-                    قريباً لتأكيد طلبك وإعطائك عرض السعر. أجب على المكالمة
-                    باش تحصل على أفضل عرض.
+                    قريب عشان يأكد معك الطلب ويعطيك عرض السعر.{" "}
+                    <strong className="text-white">
+                      ارفع المكالمة
+                    </strong>{" "}
+                    — ما تفوّتها عشان توصلك أفضل عرض.
+                  </p>
+                  <p className="mt-2 text-xs font-bold text-amber-200/80">
+                    ⚠️ الرقم ممكن يطلع ما تعرفه — هذا طبيعي، المندوب من
+                    شركائنا
                   </p>
                 </div>
               </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
+              <p className="text-sm font-extrabold text-white">
+                وش تسوي الحين؟
+              </p>
+              <ul className="mt-3 space-y-2.5">
+                {TIPS.map((tip) => (
+                  <li
+                    key={tip}
+                    className="flex items-start gap-2 text-sm text-white/65"
+                  >
+                    <span className="mt-0.5 text-teal-400">✓</span>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <ol className="space-y-4">
@@ -102,16 +135,19 @@ export default async function ThankYouPage({
 
             {id ? (
               <p className="rounded-xl bg-white/5 px-4 py-3 text-center text-sm text-white/45">
-                رقم الطلب:{" "}
+                رقم طلبك:{" "}
                 <span className="font-mono font-bold text-teal-200">{id}</span>
+                <span className="mt-1 block text-[11px] text-white/35">
+                  احفظه — ممكن يسألوك عنه بالمكالمة
+                </span>
               </p>
             ) : null}
 
             <div className="grid grid-cols-3 gap-2 border-t border-white/10 pt-5 text-center">
               {[
-                ["معتمد", "شركات موثوقة"],
+                ["معتمدين", "شركات موثوقة"],
                 ["مجاني", "بدون رسوم"],
-                ["سريع", "رد خلال دقائق"],
+                ["سريع", "رد خلال دقايق"],
               ].map(([t, d]) => (
                 <div key={t}>
                   <p className="text-xs font-extrabold text-teal-300">{t}</p>
@@ -126,7 +162,7 @@ export default async function ThankYouPage({
           href="/"
           className="fade-up-d mt-6 text-sm font-semibold text-white/40 hover:text-white/70"
         >
-          ← العودة للرئيسية
+          ← رجوع للرئيسية
         </Link>
       </div>
     </main>
