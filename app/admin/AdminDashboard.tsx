@@ -751,7 +751,7 @@ function VisitorRow({
                   <div
                     className="h-full rounded-full bg-orange-400 transition-all"
                     style={{
-                      width: `${Math.round(((v.formFilled || 0) / (v.formTotal || 6)) * 100)}%`,
+                      width: `${Math.round(((v.formFilled || 0) / (v.formTotal || 2)) * 100)}%`,
                     }}
                   />
                 </div>

@@ -40,3 +40,10 @@ body {
   100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
 }
 .pulse-cta { animation: pulse-ring 2.2s ease-out infinite; }
+
+@keyframes thank-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.thank-check { animation: thank-pop 0.55s ease-out both; }

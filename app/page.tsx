@@ -55,8 +55,8 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="fade-up-d2 mt-5 max-w-lg text-base leading-relaxed text-white/65 sm:text-lg">
-              {BRAND.nameAr} يوصّلك بشركات نقل عفش معتمدة في جدة ومدن المملكة —
-              قارن الأسعار واختار الأنسب. بدون التزام.
+              {BRAND.nameAr} يوصّلك بشركات نقل عفش معتمدة — اكتب اسمك ورقمك
+              فقط، وشركة شريكنا تتصل بك وتأكد معك التفاصيل. مجاني وبدون التزام.
             </p>
 
             <div className="fade-up-d2 mt-7 flex flex-wrap gap-3">
@@ -64,7 +64,7 @@ export default function HomePage() {
                 href="#lead-form"
                 className="pulse-cta inline-flex rounded-xl bg-teal-400 px-6 py-4 text-base font-extrabold text-[#04201a]"
               >
-                اطلب عروض مجانية
+                اطلب عرض مجاني
               </a>
               <a
                 href={wa}

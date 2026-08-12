@@ -320,14 +320,10 @@ export async function markChatRead(
 }
 
 export function formProgress(draft?: FormDraft) {
-  if (!draft) return { filled: 0, total: 6, labels: [] as string[] };
+  if (!draft) return { filled: 0, total: 2, labels: [] as string[] };
   const checks = [
     ["الاسم", Boolean(draft.name?.trim())],
     ["الجوال", (draft.phone?.replace(/\D/g, "") ?? "").length >= 9],
-    ["المدينة", Boolean(draft.city?.trim())],
-    ["نوع النقل", Boolean(draft.moveType?.trim())],
-    ["من/إلى", Boolean(draft.fromArea?.trim() || draft.toArea?.trim())],
-    ["ملاحظات", Boolean(draft.notes?.trim())],
   ] as const;
   const labels = checks.filter(([, ok]) => ok).map(([l]) => l);
   return { filled: labels.length, total: checks.length, labels };
