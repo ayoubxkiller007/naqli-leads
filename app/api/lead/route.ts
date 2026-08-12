@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     name,
     phone,
     city: BRAND.city,
-    moveType: "طلب عرض — يؤكد بالمكالمة",
+    moveType: "نقل عفش — يؤكد بالمكالمة",
     ip,
     country: geo.country,
   });

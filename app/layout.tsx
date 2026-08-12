@@ -25,9 +25,17 @@ const body = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: `${BRAND.nameAr} | ${BRAND.tagline}`,
+  title: `نقل عفش السعودية | عروض مجانية | ${BRAND.nameAr}`,
   description:
-    "اطلب عروض نقل عفش مجانية في جدة والسعودية — نربطك بشركات نقل معتمدة بسرعة.",
+    "اطلب عروض نقل عفش مجانية في جدة والرياض والدمام — شركات نقل أثاث معتمدة، فك وتركيب، نقل بين المدن. مجاني وبدون التزام.",
+  keywords: [
+    "نقل عفش",
+    "شركة نقل عفش",
+    "نقل اثاث",
+    "نقل عفش جدة",
+    "نقل عفش الرياض",
+    "شركة نقل اثاث",
+  ],
   icons: { icon: "/icon.png" },
   metadataBase: new URL("https://naqlisa.netlify.app"),
 };

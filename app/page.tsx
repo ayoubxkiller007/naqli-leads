@@ -6,10 +6,12 @@ import { LeadForm } from "@/components/LeadForm";
 import { StickyBar } from "@/components/StickyBar";
 import { Testimonials } from "@/components/Testimonials";
 
+const SERVICES = ["نقل عفش", "فك وتركيب", "تغليف أثاث", "نقل بين المدن"];
+
 const STEPS = [
-  ["1", "اكتب اسمك ورقمك", "30 ثانية — ما تحتاج تملأ فورم طويل"],
-  ["2", "بيكلمك المندوب", "يأكد معك التفاصيل بالتليفون"],
-  ["3", "تاخذ أفضل عرض", "مجاني — وما عليك أي التزام"],
+  ["1", "اطلب عرض نقل عفش", "اسم + رقم — 30 ثانية"],
+  ["2", "بيكلمك مندوب النقل", "يأكد معك: من وين لوين، نوع الأثاث"],
+  ["3", "تاخذ أفضل سعر", "مجاني — ما عليك أي التزام"],
 ];
 
 export default function HomePage() {
@@ -20,7 +22,7 @@ export default function HomePage() {
         <header className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:py-4">
           <Image
             src="/logo-light.png"
-            alt={BRAND.nameAr}
+            alt={`${BRAND.nameAr} — نقل عفش`}
             width={140}
             height={56}
             className="h-9 w-auto md:h-14"
@@ -30,22 +32,35 @@ export default function HomePage() {
             href="#lead-form"
             className="hidden rounded-xl bg-teal-400 px-5 py-2.5 text-sm font-extrabold text-[#04201a] md:inline-flex"
           >
-            اطلب عرض مجاني
+            عرض نقل عفش مجاني
           </a>
         </header>
 
-        {/* Mobile: form only — light & fast */}
+        {/* Mobile */}
         <main className="mx-auto max-w-lg px-4 pt-1 md:hidden">
-          <h1 className="font-display mb-3 text-2xl font-black leading-tight text-white">
-            تبي تنقل عفشك؟
+          <p className="mb-2 inline-flex rounded-full bg-teal-400/15 px-3 py-1 text-[11px] font-bold text-teal-300">
+            🚚 نقل عفش · {BRAND.city} والمملكة
+          </p>
+          <h1 className="font-display mb-2 text-2xl font-black leading-tight text-white">
+            شركات نقل عفش معتمدة
             <span className="mt-1 block text-base font-bold text-teal-300">
-              اسم + رقم — وبيكلمك مندوب
+              اطلب عرض مجاني — فك وتركيب · تغليف · بين المدن
             </span>
           </h1>
+          <div className="mb-3 flex flex-wrap gap-1.5">
+            {SERVICES.map((s) => (
+              <span
+                key={s}
+                className="rounded-full bg-white/5 px-2.5 py-1 text-[10px] font-bold text-white/55"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
           <LeadForm />
         </main>
 
-        {/* Desktop: full layout */}
+        {/* Desktop */}
         <main className="mx-auto hidden max-w-6xl gap-10 px-4 pb-10 pt-2 md:grid lg:grid-cols-[1fr_420px] lg:items-start">
           <aside className="lg:sticky lg:top-6">
             <LeadForm />
@@ -54,7 +69,7 @@ export default function HomePage() {
             <div className="overflow-hidden rounded-3xl border border-white/10">
               <Image
                 src="/hero.png"
-                alt="نقل عفش السعودية"
+                alt="نقل عفش — شركة نقل أثاث في السعودية"
                 width={1200}
                 height={700}
                 className="h-auto w-full object-cover"
@@ -63,21 +78,33 @@ export default function HomePage() {
             </div>
             <div>
               <p className="inline-flex rounded-full bg-teal-400/15 px-3 py-1 text-xs font-bold text-teal-300">
-                🇸🇦 {BRAND.country} · مجاني 100%
+                🚚 نقل عفش · {BRAND.country} · مجاني 100%
               </p>
               <h1 className="font-display mt-4 max-w-xl text-5xl font-black leading-[1.12] text-white">
-                تبي تنقل عفشك؟
+                شركات نقل عفش معتمدة
                 <span className="mt-2 block text-teal-300">
-                  اكتب اسمك ورقمك — وباقي علينا.
+                  عروض مجانية — فك وتركيب · تغليف · نقل بين المدن
                 </span>
               </h1>
               <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/65">
-                {BRAND.nameAr} يربطك بشركات نقل عفش معتمدة. المندوب بيكلمك
-                ويعطيك أفضل العروض — مجاني وبدون التزام.
+                {BRAND.nameAr} يربطك بأفضل شركات{" "}
+                <strong className="text-white">نقل العفش والأثاث</strong> في
+                المملكة. اكتب اسمك ورقمك — المندوب بيكلمك ويعطيك أسعار نقل
+                العفش. مجاني وبدون التزام.
               </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {SERVICES.map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-full border border-teal-400/20 bg-teal-400/10 px-3 py-1 text-xs font-bold text-teal-200"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
               <dl className="mt-8 grid grid-cols-3 gap-3 border-t border-white/10 pt-6">
                 {[
-                  ["طلبات اليوم", "+40"],
+                  ["طلبات نقل عفش", "+40"],
                   ["مدن", String(BRAND.cities.length)],
                   ["عليك", "مجاناً"],
                 ].map(([k, v]) => (
@@ -96,7 +123,7 @@ export default function HomePage() {
         <div className="hidden md:block">
           <section className="mx-auto max-w-6xl px-4 pb-12">
             <h2 className="font-display text-center text-2xl font-black text-white">
-              كيف يشتغل؟ — 3 خطوات بس
+              كيف تطلب نقل عفش؟ — 3 خطوات
             </h2>
             <ol className="mt-8 grid gap-4 sm:grid-cols-3">
               {STEPS.map(([n, t, d]) => (
@@ -118,13 +145,13 @@ export default function HomePage() {
 
           <section className="mx-auto max-w-6xl px-4 pb-12">
             <h2 className="font-display text-2xl font-black text-white">
-              ليش تستخدم {BRAND.nameAr}؟
+              ليش تطلب نقل عفش من {BRAND.nameAr}؟
             </h2>
             <ul className="mt-6 grid gap-4 sm:grid-cols-3">
               {[
-                ["⚡ سريع", "30 ثانية — وبيكلمك المندوب"],
-                ["💰 مجاني", "ما تدفع شي — العروض علينا"],
-                ["✅ معتمدين", "شركات نقل موثوقة في المملكة"],
+                ["⚡ سريع", "30 ثانية — وبيكلمك مندوب نقل العفش"],
+                ["💰 مجاني", "عروض نقل عفش بدون رسوم"],
+                ["✅ معتمدين", "شركات نقل أثاث موثوقة"],
               ].map(([t, d]) => (
                 <li
                   key={t}
@@ -143,12 +170,15 @@ export default function HomePage() {
           <section className="border-y border-white/10 bg-[#0c1613]/80 py-10">
             <div className="mx-auto max-w-6xl px-4 text-center">
               <h2 className="font-display text-2xl font-black text-white">
-                نغطي كل المملكة
+                نقل عفش في كل المملكة
               </h2>
+              <p className="mt-2 text-sm text-white/45">
+                نقل عفش جدة · الرياض · الدمام · مكة · الطائف · الخبر · المدينة
+              </p>
               <p className="mt-3 flex flex-wrap justify-center gap-3 text-sm font-medium text-white/60">
                 {BRAND.cities.map((c) => (
                   <span key={c} className="rounded-full bg-white/5 px-3 py-1">
-                    {c}
+                    نقل عفش {c}
                   </span>
                 ))}
               </p>
@@ -159,17 +189,21 @@ export default function HomePage() {
             <h2 className="font-display text-2xl font-black text-white">
               جاهز تنقل عفشك؟
             </h2>
+            <p className="mt-2 text-sm text-white/50">
+              اطلب عرض نقل عفش مجاني — بيكلمك مندوب خلال دقايق
+            </p>
             <a
               href="#lead-form"
               className="pulse-cta mt-6 inline-flex w-full items-center justify-center rounded-xl bg-teal-400 py-4 text-base font-extrabold text-[#04201a]"
             >
-              اطلب عرض مجاني
+              عرض نقل عفش مجاني
             </a>
           </section>
         </div>
 
         <footer className="hidden px-4 py-8 text-center text-xs text-white/30 md:block">
-          © {new Date().getFullYear()} {BRAND.nameAr} · عروض نقل عفش مجانية
+          © {new Date().getFullYear()} {BRAND.nameAr} · نقل عفش · شركات نقل
+          أثاث معتمدة في السعودية
         </footer>
       </div>
       <StickyBar />

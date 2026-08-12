@@ -19,7 +19,7 @@ export function LiveActivity() {
     const name = pick(NAMES, seed);
     const city = pick([...BRAND.cities], seed + 2);
     const mins = (seed % 20) + 3;
-    setLine(`${name} من ${city} طلب عرض من ${mins} دقيقة`);
+    setLine(`${name} من ${city} طلب عرض نقل عفش من ${mins} دقيقة`);
 
     const desktop = window.matchMedia("(min-width: 768px)").matches;
     if (!desktop) return;
@@ -29,7 +29,7 @@ export function LiveActivity() {
       tick += 1;
       const s = tick + seed;
       setLine(
-        `${pick(NAMES, s)} من ${pick([...BRAND.cities], s + 2)} طلب عرض من ${(s % 20) + 3} دقيقة`
+        `${pick(NAMES, s)} من ${pick([...BRAND.cities], s + 2)} طلب عرض نقل عفش من ${(s % 20) + 3} دقيقة`
       );
     }, 6000);
     return () => window.clearInterval(t);
@@ -70,7 +70,7 @@ export function SlotsLeft() {
 export function TopUrgencyBar() {
   return (
     <div className="border-b border-teal-400/15 bg-teal-400/10 px-3 py-1.5 text-center text-[11px] font-bold text-teal-200 md:py-2 md:text-xs">
-      عرض مجاني · ما عليك التزام · بيكلمك مندوب
+      🚚 عروض نقل عفش مجانية · فك وتركيب · بين المدن
     </div>
   );
 }

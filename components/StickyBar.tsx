@@ -10,7 +10,7 @@ export function StickyBar() {
         href="#lead-form"
         className="mx-auto flex max-w-lg items-center justify-center rounded-xl bg-teal-400 py-3.5 text-base font-extrabold text-[#04201a] active:opacity-90"
       >
-        اطلب عرض مجاني
+        اطلب عرض نقل عفش
       </a>
     </div>
   );

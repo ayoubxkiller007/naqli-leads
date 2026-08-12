@@ -106,13 +106,13 @@ export function LeadForm() {
 
       <div>
         <p className="text-[11px] font-bold text-teal-300 md:text-xs">
-          مجاني · 30 ثانية · ما عليك التزام
+          🚚 نقل عفش · مجاني · 30 ثانية
         </p>
         <h2 className="mt-1 text-xl font-extrabold text-white md:text-3xl">
-          اطلب عرض نقل عفش
+          اطلب عرض نقل عفش مجاني
         </h2>
-        <p className="mt-1 hidden text-sm text-white/55 md:block">
-          اسمك + رقمك — وبيكلمك مندوب ويعطيك أفضل عروض
+        <p className="mt-1 text-xs text-white/55 md:text-sm">
+          اسم + رقم — شركات نقل عفش معتمدة بيكلمونك
         </p>
       </div>
 
@@ -181,11 +181,11 @@ export function LeadForm() {
         disabled={loading}
         className="pulse-cta w-full rounded-xl bg-teal-400 py-4 text-base font-extrabold text-[#04201a] active:scale-[0.98] md:shadow-lg md:shadow-teal-400/20"
       >
-        {loading ? "جاري الإرسال…" : "اطلب عرض مجاني"}
+        {loading ? "جاري الإرسال…" : "🚚 اطلب عرض نقل عفش مجاني"}
       </button>
 
       <p className="text-center text-[11px] font-semibold text-white/40 md:hidden">
-        ✓ مجاني · ✓ بيكلمك مندوب · ✓ بدون التزام
+        ✓ نقل عفش · ✓ فك وتركيب · ✓ مجاني
       </p>
 
       <div className="hidden md:block">
@@ -195,7 +195,7 @@ export function LeadForm() {
       <div className="hidden flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] font-semibold text-white/40 md:flex">
         <span>✓ مجاني</span>
         <span>✓ بدون التزام</span>
-        <span>✓ شركات معتمدة</span>
+        <span>✓ شركات نقل عفش</span>
       </div>
     </form>
   );

@@ -3,7 +3,7 @@ export const BRAND = {
   nameEn: "Naqli",
   city: "جدة",
   country: "السعودية",
-  tagline: "عروض نقل عفش مجانية من شركات معتمدة",
+  tagline: "نقل عفش — عروض مجانية من شركات معتمدة",
   /** WhatsApp only — used in wa.me links, never shown as visible text on the site */
   whatsapp: "212704497048",
   cities: ["جدة", "الرياض", "الدمام", "مكة", "الطائف", "الخبر", "المدينة"],

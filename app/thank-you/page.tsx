@@ -11,8 +11,8 @@ const STEPS = [
   },
   {
     n: "2",
-    title: "بيكلمك مندوب الشركة",
-    desc: "مندوب من شركتنا المعتمدة بيتصل فيك قريب ويأكد معك التفاصيل",
+    title: "بيكلمك مندوب نقل العفش",
+    desc: "مندوب من شركة نقل عفش معتمدة بيتصل فيك ويأكد: من وين لوين، حجم الأثاث",
   },
   {
     n: "3",
@@ -64,11 +64,12 @@ export default async function ThankYouPage({
               </svg>
             </div>
             <h1 className="font-display mt-5 text-3xl font-black text-white sm:text-4xl">
-              تمام، وصلنا طلبك 👌
+              تم طلبك — نقل عفش ✅
             </h1>
             <p className="mt-3 text-base leading-relaxed text-white/65">
-              يا هلا فيك — شكراً إنك اخترت{" "}
-              <span className="font-bold text-teal-300">{BRAND.nameAr}</span>
+              شكراً — سجّلنا طلب{" "}
+              <span className="font-bold text-teal-300">نقل العفش</span> في{" "}
+              {BRAND.nameAr}
             </p>
             <CallCountdown />
           </div>
