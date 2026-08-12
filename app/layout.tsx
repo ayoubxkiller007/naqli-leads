@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cairo, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { BRAND } from "@/lib/config";
+import { LiveChat } from "@/components/LiveChat";
 import { Tracker } from "@/components/Tracker";
 
 const display = Cairo({
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="ar" dir="rtl">
       <body className={`${display.variable} ${body.variable} antialiased`}>
         <Tracker />
+        <LiveChat />
         {children}
       </body>
     </html>

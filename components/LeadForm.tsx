@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BRAND, MOVE_TYPES } from "@/lib/config";
+import { getVisitorId, trackVisitor } from "@/lib/visitor-client";
 
 export function LeadForm() {
   const router = useRouter();
@@ -15,6 +16,54 @@ export function LeadForm() {
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const trackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const draft = useCallback(
+    () => ({ name, phone, city, moveType, fromArea, toArea, notes }),
+    [name, phone, city, moveType, fromArea, toArea, notes]
+  );
+
+  const pushDraft = useCallback(
+    (stage: "viewing_form" | "filling_form", activity?: string) => {
+      if (trackTimer.current) clearTimeout(trackTimer.current);
+      trackTimer.current = setTimeout(() => {
+        trackVisitor({
+          path: window.location.pathname + window.location.hash,
+          stage,
+          formDraft: draft(),
+          activity,
+        });
+      }, 400);
+    },
+    [draft]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (trackTimer.current) clearTimeout(trackTimer.current);
+    };
+  }, []);
+
+  function onFocusForm() {
+    if (!focused) {
+      setFocused(true);
+      trackVisitor({
+        path: window.location.pathname + "#lead-form",
+        stage: "viewing_form",
+        activity: "شاف الفورم",
+      });
+    }
+  }
+
+  function onFieldChange(
+    setter: (v: string) => void,
+    value: string,
+    label: string
+  ) {
+    setter(value);
+    pushDraft("filling_form", `يكتب: ${label}`);
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -32,6 +81,7 @@ export function LeadForm() {
           fromArea,
           toArea,
           notes,
+          visitorId: getVisitorId(),
         }),
       });
       const json = await res.json().catch(() => ({}));
@@ -54,6 +104,7 @@ export function LeadForm() {
     <form
       id="lead-form"
       onSubmit={onSubmit}
+      onFocus={onFocusForm}
       className="space-y-3 rounded-2xl border border-white/10 bg-[#101a17]/95 p-5 shadow-2xl backdrop-blur"
       dir="rtl"
     >
@@ -73,7 +124,7 @@ export function LeadForm() {
         className={field}
         placeholder="الاسم الكامل"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => onFieldChange(setName, e.target.value, "الاسم")}
         required
       />
       <input
@@ -82,14 +133,14 @@ export function LeadForm() {
         type="tel"
         inputMode="tel"
         value={phone}
-        onChange={(e) => setPhone(e.target.value)}
+        onChange={(e) => onFieldChange(setPhone, e.target.value, "الجوال")}
         required
       />
       <div className="grid grid-cols-2 gap-3">
         <select
           className={field}
           value={city}
-          onChange={(e) => setCity(e.target.value)}
+          onChange={(e) => onFieldChange(setCity, e.target.value, "المدينة")}
           required
         >
           {BRAND.cities.map((c) => (
@@ -101,7 +152,9 @@ export function LeadForm() {
         <select
           className={field}
           value={moveType}
-          onChange={(e) => setMoveType(e.target.value)}
+          onChange={(e) =>
+            onFieldChange(setMoveType, e.target.value, "نوع النقل")
+          }
           required
         >
           {MOVE_TYPES.map((t) => (
@@ -116,20 +169,20 @@ export function LeadForm() {
           className={field}
           placeholder="من حي…"
           value={fromArea}
-          onChange={(e) => setFromArea(e.target.value)}
+          onChange={(e) => onFieldChange(setFromArea, e.target.value, "من")}
         />
         <input
           className={field}
           placeholder="إلى حي…"
           value={toArea}
-          onChange={(e) => setToArea(e.target.value)}
+          onChange={(e) => onFieldChange(setToArea, e.target.value, "إلى")}
         />
       </div>
       <textarea
         className={`${field} min-h-[70px] resize-none`}
         placeholder="ملاحظات (اختياري)"
         value={notes}
-        onChange={(e) => setNotes(e.target.value)}
+        onChange={(e) => onFieldChange(setNotes, e.target.value, "ملاحظات")}
       />
 
       {error ? <p className="text-sm text-red-300">{error}</p> : null}

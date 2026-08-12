@@ -44,5 +44,22 @@ export async function POST(req: NextRequest) {
     country: geo.country,
   });
 
+  const visitorId = String(body.visitorId || "").slice(0, 64);
+  if (visitorId) {
+    const { upsertVisitor } = await import("@/lib/visitor-store");
+    await upsertVisitor({
+      id: visitorId,
+      ip,
+      country: geo.country,
+      city: geo.city,
+      region: geo.region,
+      path: "/thank-you",
+      stage: "submitted",
+      submittedLead: true,
+      activity: `أرسل لياد: ${name} · ${city}`,
+      formDraft: { name, phone, city, moveType, fromArea, toArea, notes },
+    });
+  }
+
   return NextResponse.json({ ok: true, id: lead.id });
 }
