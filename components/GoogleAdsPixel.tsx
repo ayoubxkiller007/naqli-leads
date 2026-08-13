@@ -9,12 +9,13 @@ declare global {
   }
 }
 
-/** Google Ads account + GA4 — set in Netlify env vars */
+/** Google Ads account + GA4 — override via Netlify env if needed */
 export const GOOGLE_ADS_ID =
   process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-17638857709";
 export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-X2T792QM0E";
+/** Naqli Lead Form Submit — conversionAction 7719575470 */
 export const LEAD_LABEL =
-  process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL || "";
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL || "wvDvCK6__eAcEO237tpB";
 
 export function GoogleAdsPixel() {
   return (
