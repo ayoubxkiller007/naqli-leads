@@ -21,17 +21,14 @@ export function LiveActivity() {
     const mins = (seed % 20) + 3;
     setLine(`${name} من ${city} طلب عرض نقل عفش من ${mins} دقيقة`);
 
-    const desktop = window.matchMedia("(min-width: 768px)").matches;
-    if (!desktop) return;
-
     let tick = 0;
     const t = window.setInterval(() => {
       tick += 1;
       const s = tick + seed;
       setLine(
-        `${pick(NAMES, s)} من ${pick([...BRAND.cities], s + 2)} طلب عرض نقل عفش من ${(s % 20) + 3} دقيقة`
+        `${pick(NAMES, s)} من ${pick([...BRAND.cities], s + 2)} طلب عرض نقل عفش من ${(s % 20) + 3} دقيقة`,
       );
-    }, 6000);
+    }, 7000);
     return () => window.clearInterval(t);
   }, []);
 
@@ -39,8 +36,10 @@ export function LiveActivity() {
 
   return (
     <div className="flex items-center gap-2 rounded-xl border border-teal-400/20 bg-teal-400/10 px-3 py-2.5">
-      <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-400" />
-      <p className="text-xs font-semibold text-teal-100/90">{line}</p>
+      <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-emerald-400" />
+      <p className="text-[11px] font-semibold leading-snug text-teal-100/90 md:text-xs">
+        {line}
+      </p>
     </div>
   );
 }

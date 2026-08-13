@@ -15,11 +15,17 @@ const STEPS = [
   ["3", "تاخذ أفضل سعر", "مجاني — ما عليك أي التزام"],
 ];
 
+const BENEFITS = [
+  ["⚡ سريع", "30 ثانية — وبيكلمك مندوب نقل العفش"],
+  ["💰 مجاني", "عروض نقل عفش بدون رسوم"],
+  ["✅ معتمدين", "شركات نقل أثاث موثوقة"],
+];
+
 export default function HomePage() {
   return (
     <>
       <TopUrgencyBar />
-      <div className="hero-bg min-h-screen pb-[4.5rem] md:pb-0" dir="rtl">
+      <div className="hero-bg min-h-screen pb-24 md:pb-0" dir="rtl">
         <header className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 md:py-4">
           <Image
             src="/logo-light.png"
@@ -36,19 +42,16 @@ export default function HomePage() {
             <a href="/pages/privacy" className="hover:text-teal-300">
               الخصوصية
             </a>
-            <a href="/pages/terms" className="hover:text-teal-300">
-              الشروط
-            </a>
             <a
               href="#lead-form"
-              className="hidden rounded-xl bg-teal-400 px-5 py-2.5 text-sm font-extrabold text-[#04201a] md:inline-flex"
+              className="rounded-lg bg-teal-400 px-3 py-1.5 text-[11px] font-extrabold text-[#04201a] md:rounded-xl md:px-5 md:py-2.5 md:text-sm"
             >
-              عرض نقل عفش مجاني
+              عرض مجاني
             </a>
           </nav>
         </header>
 
-        {/* Mobile */}
+        {/* Mobile: form first */}
         <main className="mx-auto max-w-lg px-4 pt-1 md:hidden">
           <p className="mb-2 inline-flex rounded-full bg-teal-400/15 px-3 py-1 text-[11px] font-bold text-teal-300">
             🚚 نقل عفش · {BRAND.city} والمملكة
@@ -70,6 +73,25 @@ export default function HomePage() {
             ))}
           </div>
           <LeadForm />
+
+          {/* Trust strip under form */}
+          <ul className="mt-4 grid grid-cols-3 gap-2 text-center">
+            {[
+              ["+40", "طلب اليوم"],
+              ["5–15", "دقيقة رد"],
+              ["100%", "مجاني"],
+            ].map(([v, k]) => (
+              <li
+                key={k}
+                className="rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3"
+              >
+                <p className="font-display text-lg font-black text-teal-300">
+                  {v}
+                </p>
+                <p className="text-[10px] font-bold text-white/45">{k}</p>
+              </li>
+            ))}
+          </ul>
         </main>
 
         {/* Desktop */}
@@ -132,64 +154,77 @@ export default function HomePage() {
           </section>
         </main>
 
-        <div className="hidden md:block">
-          <section className="mx-auto max-w-6xl px-4 pb-12">
-            <h2 className="font-display text-center text-2xl font-black text-white">
+        {/* Shared content — mobile + desktop */}
+        <div className="mx-auto max-w-6xl">
+          <section className="px-4 pb-10 pt-10 md:pb-12">
+            <h2 className="font-display text-center text-xl font-black text-white md:text-2xl">
               كيف تطلب نقل عفش؟ — 3 خطوات
             </h2>
-            <ol className="mt-8 grid gap-4 sm:grid-cols-3">
+            <ol className="mt-6 grid gap-3 sm:grid-cols-3 md:mt-8 md:gap-4">
               {STEPS.map(([n, t, d]) => (
                 <li
                   key={n}
-                  className="rounded-2xl border border-white/10 bg-[#101a17] p-5 text-center"
+                  className="rounded-2xl border border-white/10 bg-[#101a17] p-4 text-center md:p-5"
                 >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-teal-400/20 text-lg font-black text-teal-300">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-teal-400/20 text-base font-black text-teal-300 md:h-10 md:w-10 md:text-lg">
                     {n}
                   </span>
-                  <p className="mt-3 font-display text-lg font-bold text-white">
+                  <p className="mt-2 font-display text-base font-bold text-white md:mt-3 md:text-lg">
                     {t}
                   </p>
-                  <p className="mt-1 text-sm text-white/50">{d}</p>
+                  <p className="mt-1 text-xs text-white/50 md:text-sm">{d}</p>
                 </li>
               ))}
             </ol>
           </section>
 
-          <section className="mx-auto max-w-6xl px-4 pb-12">
-            <h2 className="font-display text-2xl font-black text-white">
+          <section className="px-4 pb-10 md:pb-12">
+            <h2 className="font-display text-xl font-black text-white md:text-2xl">
               ليش تطلب نقل عفش من {BRAND.nameAr}؟
             </h2>
-            <ul className="mt-6 grid gap-4 sm:grid-cols-3">
-              {[
-                ["⚡ سريع", "30 ثانية — وبيكلمك مندوب نقل العفش"],
-                ["💰 مجاني", "عروض نقل عفش بدون رسوم"],
-                ["✅ معتمدين", "شركات نقل أثاث موثوقة"],
-              ].map(([t, d]) => (
+            <ul className="mt-5 grid gap-3 sm:grid-cols-3 md:mt-6 md:gap-4">
+              {BENEFITS.map(([t, d]) => (
                 <li
                   key={t}
-                  className="border-r-2 border-teal-400/80 bg-white/[0.03] py-4 pr-4 pl-3"
+                  className="border-r-2 border-teal-400/80 bg-white/[0.03] py-3 pr-4 pl-3 md:py-4"
                 >
-                  <p className="font-display text-xl font-bold text-white">{t}</p>
-                  <p className="mt-1 text-sm text-white/50">{d}</p>
+                  <p className="font-display text-lg font-bold text-white md:text-xl">
+                    {t}
+                  </p>
+                  <p className="mt-1 text-xs text-white/50 md:text-sm">{d}</p>
                 </li>
               ))}
             </ul>
           </section>
 
+          {/* Mobile hero image */}
+          <section className="px-4 pb-8 md:hidden">
+            <div className="overflow-hidden rounded-2xl border border-white/10">
+              <Image
+                src="/hero.png"
+                alt="نقل عفش — شركة نقل أثاث في السعودية"
+                width={1200}
+                height={700}
+                className="h-auto w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </section>
+
           <Testimonials />
           <FAQ />
 
-          <section className="border-y border-white/10 bg-[#0c1613]/80 py-10">
-            <div className="mx-auto max-w-6xl px-4 text-center">
-              <h2 className="font-display text-2xl font-black text-white">
+          <section className="border-y border-white/10 bg-[#0c1613]/80 py-8 md:py-10">
+            <div className="px-4 text-center">
+              <h2 className="font-display text-xl font-black text-white md:text-2xl">
                 نقل عفش في كل المملكة
               </h2>
-              <p className="mt-2 text-sm text-white/45">
+              <p className="mt-2 text-xs text-white/45 md:text-sm">
                 نقل عفش جدة · الرياض · الدمام · مكة · الطائف · الخبر · المدينة
               </p>
-              <p className="mt-3 flex flex-wrap justify-center gap-3 text-sm font-medium text-white/60">
+              <p className="mt-3 flex flex-wrap justify-center gap-2 text-xs font-medium text-white/60 md:gap-3 md:text-sm">
                 {BRAND.cities.map((c) => (
-                  <span key={c} className="rounded-full bg-white/5 px-3 py-1">
+                  <span key={c} className="rounded-full bg-white/5 px-2.5 py-1">
                     نقل عفش {c}
                   </span>
                 ))}
@@ -197,8 +232,8 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="mx-auto max-w-lg px-4 py-12 text-center">
-            <h2 className="font-display text-2xl font-black text-white">
+          <section className="px-4 py-10 text-center md:py-12">
+            <h2 className="font-display text-xl font-black text-white md:text-2xl">
               جاهز تنقل عفشك؟
             </h2>
             <p className="mt-2 text-sm text-white/50">
@@ -206,10 +241,13 @@ export default function HomePage() {
             </p>
             <a
               href="#lead-form"
-              className="pulse-cta mt-6 inline-flex w-full items-center justify-center rounded-xl bg-teal-400 py-4 text-base font-extrabold text-[#04201a]"
+              className="pulse-cta mt-5 inline-flex w-full max-w-lg items-center justify-center rounded-xl bg-teal-400 py-4 text-base font-extrabold text-[#04201a]"
             >
-              عرض نقل عفش مجاني
+              عرض نقل عفش مجاني الآن
             </a>
+            <p className="mt-3 text-[11px] font-semibold text-white/40">
+              بدون رسوم · بدون التزام · رد خلال دقايق
+            </p>
           </section>
         </div>
 
