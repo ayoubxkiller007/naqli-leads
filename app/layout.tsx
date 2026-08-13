@@ -4,6 +4,7 @@ import "./globals.css";
 import { BRAND } from "@/lib/config";
 import { Tracker } from "@/components/Tracker";
 import { LiveChat } from "@/components/LiveChat";
+import { GoogleAdsPixel } from "@/components/GoogleAdsPixel";
 
 const display = Cairo({
   subsets: ["arabic"],
@@ -41,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className={`${display.variable} ${body.variable} antialiased`}>
+        <GoogleAdsPixel />
         <Tracker />
         <LiveChat />
         {children}

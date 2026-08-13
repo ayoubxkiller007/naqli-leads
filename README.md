@@ -3,6 +3,18 @@
 Brand: **نَقْلِي / Naqli** · Niche: نقل عفش · City focus: جدة  
 Model: Google Ads → form/WhatsApp → sell leads to movers
 
+## Google Ads lead pixel
+
+1. In Google Ads: **Goals > Conversions > New conversion action > Website > Submit lead form**
+2. Copy the conversion label (the part after `AW-XXXXXXXXX/`)
+3. In Netlify site env vars set:
+   - `NEXT_PUBLIC_GOOGLE_ADS_ID` (e.g. `AW-17638857709`)
+   - `NEXT_PUBLIC_GA_ID` (GA4 property)
+   - `NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL` (from step 2)
+4. Redeploy. Conversion fires on `/thank-you` after form submit.
+
+Verification PDF for Google reviewer: `docs/google-ads/Naqli-Google-Ads-Verification-Pack.pdf`
+
 ## Localhost
 
 ```bash

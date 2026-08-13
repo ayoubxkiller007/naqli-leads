@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BRAND } from "@/lib/config";
 import { CallCountdown, ThankYouTracker } from "@/components/ThankYouTracker";
+import { GoogleAdsLeadConversion } from "@/components/GoogleAdsPixel";
 
 const STEPS = [
   {
@@ -37,6 +38,7 @@ export default async function ThankYouPage({
   return (
     <main className="hero-bg min-h-screen px-4 py-8" dir="rtl">
       <ThankYouTracker />
+      <GoogleAdsLeadConversion leadId={id} />
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-lg flex-col items-center justify-center">
         <div className="fade-up w-full overflow-hidden rounded-3xl border border-white/10 bg-[#101a17]/95 shadow-2xl backdrop-blur">
           <div className="border-b border-white/10 bg-gradient-to-b from-teal-500/10 to-transparent px-6 py-8 text-center">
