@@ -3,6 +3,7 @@ import { BRAND } from "@/lib/config";
 import { TopUrgencyBar } from "@/components/ConversionWidgets";
 import { FAQ } from "@/components/FAQ";
 import { LeadForm } from "@/components/LeadForm";
+import { SiteFooter } from "@/components/SiteFooter";
 import { StickyBar } from "@/components/StickyBar";
 import { Testimonials } from "@/components/Testimonials";
 
@@ -19,7 +20,7 @@ export default function HomePage() {
     <>
       <TopUrgencyBar />
       <div className="hero-bg min-h-screen pb-[4.5rem] md:pb-0" dir="rtl">
-        <header className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:py-4">
+        <header className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 md:py-4">
           <Image
             src="/logo-light.png"
             alt={`${BRAND.nameAr} — نقل عفش`}
@@ -28,12 +29,23 @@ export default function HomePage() {
             className="h-9 w-auto md:h-14"
             priority
           />
-          <a
-            href="#lead-form"
-            className="hidden rounded-xl bg-teal-400 px-5 py-2.5 text-sm font-extrabold text-[#04201a] md:inline-flex"
-          >
-            عرض نقل عفش مجاني
-          </a>
+          <nav className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1 text-[11px] font-bold text-white/55 md:gap-x-4 md:text-xs">
+            <a href="/pages/about" className="hover:text-teal-300">
+              من نحن
+            </a>
+            <a href="/pages/privacy" className="hover:text-teal-300">
+              الخصوصية
+            </a>
+            <a href="/pages/terms" className="hover:text-teal-300">
+              الشروط
+            </a>
+            <a
+              href="#lead-form"
+              className="hidden rounded-xl bg-teal-400 px-5 py-2.5 text-sm font-extrabold text-[#04201a] md:inline-flex"
+            >
+              عرض نقل عفش مجاني
+            </a>
+          </nav>
         </header>
 
         {/* Mobile */}
@@ -201,10 +213,7 @@ export default function HomePage() {
           </section>
         </div>
 
-        <footer className="hidden px-4 py-8 text-center text-xs text-white/30 md:block">
-          © {new Date().getFullYear()} {BRAND.nameAr} · نقل عفش · شركات نقل
-          أثاث معتمدة في السعودية
-        </footer>
+        <SiteFooter />
       </div>
       <StickyBar />
     </>

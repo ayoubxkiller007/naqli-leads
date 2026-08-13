@@ -1,14 +1,9 @@
-import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import { Cairo, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { BRAND } from "@/lib/config";
 import { Tracker } from "@/components/Tracker";
-
-const LiveChat = dynamic(
-  () => import("@/components/LiveChat").then((m) => m.LiveChat),
-  { ssr: false }
-);
+import { LiveChat } from "@/components/LiveChat";
 
 const display = Cairo({
   subsets: ["arabic"],

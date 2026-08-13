@@ -188,6 +188,18 @@ export function LeadForm() {
         ✓ نقل عفش · ✓ فك وتركيب · ✓ مجاني
       </p>
 
+      <p className="text-center text-[10px] leading-relaxed text-white/35">
+        بإرسالك الطلب توافق على{" "}
+        <a href="/pages/privacy" className="text-teal-400/80 underline">
+          سياسة الخصوصية
+        </a>{" "}
+        و{" "}
+        <a href="/pages/terms" className="text-teal-400/80 underline">
+          الشروط
+        </a>
+        .
+      </p>
+
       <div className="hidden md:block">
         <TodayCounter />
       </div>
