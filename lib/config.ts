@@ -1,11 +1,16 @@
 export const BRAND = {
   nameAr: "نَقْلِي",
-  nameEn: "Naqli",
+  nameEn: "Naql",
+  legalName: "Ayoub Elamiry",
   city: "جدة",
   country: "السعودية",
+  operatorCountry: "Morocco",
+  operatorCity: "Casablanca",
+  addressLine: "Hay Mohammadi, 3 N 21, Casablanca 20350, Morocco",
+  addressAr: "حي المحمدي، رقم 3 ن 21، الدار البيضاء 20350، المغرب",
   tagline: "نقل عفش — عروض مجانية من شركات معتمدة",
-  /** WhatsApp only — used in wa.me links, never shown as visible text on the site */
   whatsapp: "212704497048",
+  whatsappDisplay: "+212 704-497048",
   cities: ["جدة", "الرياض", "الدمام", "مكة", "الطائف", "الخبر", "المدينة"],
 };
 

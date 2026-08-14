@@ -28,8 +28,11 @@ export function SiteFooter({ className = "" }: { className?: string }) {
         ))}
       </nav>
       <p className="text-xs text-white/30">
-        © {new Date().getFullYear()} {BRAND.nameAr} · نقل عفش · شركات نقل أثاث
-        معتمدة في {BRAND.country}
+        © {new Date().getFullYear()} {BRAND.nameEn} ({BRAND.nameAr}) · operated
+        by {BRAND.legalName}
+      </p>
+      <p className="mt-2 text-[10px] leading-relaxed text-white/25">
+        {BRAND.addressLine}
       </p>
     </footer>
   );

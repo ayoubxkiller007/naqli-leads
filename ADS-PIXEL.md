@@ -1,6 +1,6 @@
 # Google Ads — Naqli lead tracking
 
-Account: `905-794-0891` (EbookVerse)
+Account: `905-794-0891` (Ayoub Elamiry / Naql)
 Tag: `AW-17638857709`
 GA4: `G-X2T792QM0E`
 
